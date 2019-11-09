@@ -1,24 +1,23 @@
 # DB構成
 
-- *** admin
-    - name string
+* admin
+    * name string
 
-- *** user
+* user
     - name string
     - email string
     - password_digest string
 
-- *** task
+* task
     - title string
     - content text
     - id_user index
     - id_label index
 
-- *** task
+* task
     - color string
     - content string
     - id_task index
 
 # ER図
-
-![ER図](/Users/takayukitakahashi/workspace/manyou/docs/ermap_1.png)
+![ER図](https://github.com/takayuki-takahashi-dic/manyou/blob/master/docs/ermap_1.png)
