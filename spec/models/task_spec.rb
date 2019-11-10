@@ -1,5 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  before do
+    @task = FactoryBot.build(:task)
+  end
+
+  describe 'バリデーション' do
+    it 'nameとemailどちらも値が設定されていれば、OK' do
+      expect(@task.valid?).to eq(true)
+    end
+  end
+
 end
