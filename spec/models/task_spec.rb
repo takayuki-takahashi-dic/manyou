@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-
   before do
     @task = FactoryBot.build(:task)
   end
@@ -11,5 +10,4 @@ RSpec.describe Task, type: :model do
       expect(@task.valid?).to eq(true)
     end
   end
-
 end
