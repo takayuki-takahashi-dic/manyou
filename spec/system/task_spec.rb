@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :system do
+  before do
+    @task = FactoryBot.create(:task)
+  end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
-      @task = FactoryBot.create(:task)
+
       visit tasks_path
       expect(page).to have_content 'TEST_TITLE'
       end
@@ -38,7 +41,7 @@ RSpec.describe Task, type: :system do
 
        visit tasks_path
        first(:link, 'Show').click
-       expect(page).to have_content 'TITLE1'
+       expect(page).to have_content 'TITLE3'
        end
 
      end
