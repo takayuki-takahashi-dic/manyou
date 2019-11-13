@@ -38,7 +38,7 @@ RSpec.describe Task, type: :system do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示されたページに遷移すること' do
         visit tasks_path
-        all('tbody tr').last.click_link 'Show'
+        all('tbody tr').last.click_link '詳細'
         expect(page).to have_content 'TEST_TITLE11'
       end
     end
@@ -48,7 +48,7 @@ RSpec.describe Task, type: :system do
     context 'タスクが作成日時の降順に並んでいるかのテスト' do
       it '最初のshowlinkをクリックすると、最後に作成したタスクの内容が表示されたページに遷移すること' do
         visit tasks_path
-        first(:link, 'Show').click
+        first(:link, '詳細').click
         expect(page).to have_content 'TEST_TITLE20'
       end
     end
