@@ -8,7 +8,7 @@ class TasksController < ApplicationController
     if params[:sort]
     @tasks = Task.all.order(params[:sort])
     else
-    @tasks = Task.all.order(created_at: "desc")
+    @tasks = Task.all.order(created_at: "desc") # 初期状態は作成日時で降順
     end
   end
 
@@ -74,6 +74,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:title, :content, :deadline)
+      params.require(:task).permit(:title, :content, :deadline, :status)
     end
 end

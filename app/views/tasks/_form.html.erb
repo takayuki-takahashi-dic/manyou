@@ -26,6 +26,13 @@
     <%= form.date_select :deadline %>
   </div>
 
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, Task.enum_options_for_select(:status) %>
+  </div>
+
+
+
 
   <div class="actions">
     <%= form.submit %>

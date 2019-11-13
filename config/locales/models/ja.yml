@@ -10,3 +10,8 @@ ja:
         title: タイトル
         content: 詳細
         deadline: 終了期日
+        status: ステータス
+      task/status:
+        waiting: 未着手
+        working: 着手
+        completed: 完了

@@ -17,6 +17,7 @@ ja:
       new: '新規タスク作成'
       confirm: '本当に削除してよろしいでしょうか？'
       deadline: 終了期限
+      status: ステータス
       created_at desc: 作成日時(降順)
       created_at asc: 作成日時(昇順)
       deadline desc: 終了期限(降順)
@@ -33,5 +34,7 @@ ja:
       content: '詳細'
       Edit: 編集
       Back: 戻る
+      deadline: 終了期限
+      status: ステータス
       # title: '%{user_name}さんのユーザ情報を編集'
       # view側で t(.titile), user_name: @user.name みたいな感じで設定できる
