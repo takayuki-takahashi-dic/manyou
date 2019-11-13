@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   # GET /tasks.json
   # 作成日時で降順
   def index
-    @tasks = Task.all.order(created_at: "DESC")
+    @tasks = Task.all.order(params[:sort])
   end
 
   # GET /tasks/1
