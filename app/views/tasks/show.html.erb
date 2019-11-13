@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
+<h1><%= t '.show_title' %></h1>
 
-<p>title: <%= @task.title %></p>
-<p>content: <%= @task.content %></p>
+<p><%= t '.title' %>: <%= @task.title %></p>
+<p><%= t '.content' %>: <%= @task.content %></p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('.Edit'), edit_task_path(@task) %> |
+<%= link_to t('.Back'), tasks_path %>
