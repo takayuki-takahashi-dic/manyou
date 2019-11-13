@@ -19,7 +19,7 @@ ja:
       deadline: 終了期日
       created_at desc: 作成日時(降順)
       created_at asc: 作成日時(昇順)
-      deadline desc: 終了期日(昇順)
+      deadline desc: 終了期日(降順)
       deadline asc: 終了期日(昇順)
     new:
       Back: 戻る
