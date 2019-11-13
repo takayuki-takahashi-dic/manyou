@@ -16,11 +16,11 @@ ja:
       destroy: '削除'
       new: '新規タスク作成'
       confirm: '本当に削除してよろしいでしょうか？'
-      deadline: 終了期日
+      deadline: 終了期限
       created_at desc: 作成日時(降順)
       created_at asc: 作成日時(昇順)
-      deadline desc: 終了期日(降順)
-      deadline asc: 終了期日(昇順)
+      deadline desc: 終了期限(降順)
+      deadline asc: 終了期限(昇順)
     new:
       Back: 戻る
       New Task: 新規作成

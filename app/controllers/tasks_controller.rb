@@ -3,9 +3,13 @@ class TasksController < ApplicationController
 
   # GET /tasks
   # GET /tasks.json
-  # 作成日時で降順
+  # 初期状態は作成日時で降順
   def index
+    if params[:sort]
     @tasks = Task.all.order(params[:sort])
+    else
+    @tasks = Task.all.order(created_at: "desc")
+    end
   end
 
   # GET /tasks/1
