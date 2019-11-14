@@ -1,13 +1,26 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= t('.index_title') %></h1>
+<%= link_to t('.index'), tasks_path %>
 
 <%= link_to t('.created_at desc'), sort: "created_at desc" %>
 <%= link_to t('.created_at asc'), sort: "created_at asc" %>
 <%= link_to t('.deadline desc'), sort: "deadline desc" %>
 <%= link_to t('.deadline asc'), sort: "deadline asc" %>
 
+<p>検索</p>
+<%= form_with(scope: :search, url: tasks_path, method: :get, local: true) do |f| %>
+  <%= f.label(:title, 'title') %>
+  <%= f.text_field :title, value: @search_params[:title] %>
 
+  <%= f.collection_radio_buttons(:dead, Task.statuses, :first, :first) do |r| %>
+  <!-- r.valueと@search_params[:gender]が一致した場合はcheckedにtrueを設定する-->
+  <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
+<% end %>
+
+
+  <%= f.submit('検索') %>
+<% end %>
 
 <table>
   <thead>
