@@ -19,23 +19,32 @@
     <tr>
       <th>
         <%= t '.created_at' %>
+        <%= sort_asc('created_at', @search_params) %>
+        <%= sort_desc('created_at', @search_params) %>
       </th>
       <th>
         <%= t '.deadline' %>
-        <%= t '.created_at' %>
+        <%= sort_asc('deadline', @search_params) %>
+        <%= sort_desc('deadline', @search_params) %>
       </th>
-      <th>
+      <th><%= t '.title' %>
         <%= sort_asc('title', @search_params) %>
         <%= sort_desc('title', @search_params) %>
       </th>
       <th>
         <%= t '.content' %>
+        <%= sort_asc('content', @search_params) %>
+        <%= sort_desc('content', @search_params) %>
       </th>
       <th>
         <%= t '.status' %>
+        <%= sort_asc('status', @search_params) %>
+        <%= sort_desc('status', @search_params) %>
       </th>
       <th>
         <%= t '.priority' %>
+        <%= sort_asc('priority', @search_params) %>
+        <%= sort_desc('priority', @search_params) %>
       </th>
     </tr>
   </thead>
