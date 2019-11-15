@@ -3,38 +3,20 @@
 <h1><%= t('.index_title') %></h1>
 <%= link_to t('.index'), tasks_path %>
 
-<%# <%= link_to t('.created_at desc'), sort: "created_at desc" %> %>
-<%# <%= link_to t('.created_at asc'), sort: "created_at asc" %> %>
-<%# <%= link_to t('.deadline desc'), sort: "deadline desc" %> %>
-<%# <%= link_to t('.deadline asc'), sort: "deadline asc" %> %>
-
-<p>検索</p>
-<%= form_with(scope: :search, url: tasks_path, method: :get, local: true) do |f| %>
-  <%= f.label(t('.title')) %>
-  <%= f.text_field :title, value: @search_params[:title] %>
-
-  <%= f.collection_radio_buttons(:status, Task.statuses, :first, :first) do |r| %>
-  <!-- r.valueと@search_params[:gender]が一致した場合はcheckedにtrueを設定する-->
-  <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
-<% end %>
-
-
-  <%= f.submit('検索') %>
-<% end %>
+<%= link_to t('.created_at desc'), sort: "created_at desc" %>
+<%= link_to t('.created_at asc'), sort: "created_at asc" %>
+<%= link_to t('.deadline desc'), sort: "deadline desc" %>
+<%= link_to t('.deadline asc'), sort: "deadline asc" %>
 
 <table>
   <thead>
     <tr>
       <th>
-        <%# <%= t '.created_at' %> created_at
-        <%= sort_asc('created_at', @search_params) %>
-        <%= sort_desc('created_at', @search_params) %>
+        <%= t '.created_at' %>
       </th>
       <th>
         <%= t '.deadline' %>
-        <%# <%= t '.created_at' %> deadline
-        <%= sort_asc('deadline', @search_params) %>
-        <%= sort_desc('deadline', @search_params) %>
+        <%= t '.created_at' %>
       </th>
       <th>
         <%= t '.title' %>
@@ -65,7 +47,6 @@
         <td><%= link_to t('.destroy'), task, method: :delete, data: { confirm: t('.confirm') } %></td>
       </tr>
     <% end %>
-    <%= paginate @tasks %>
   </tbody>
 </table>
 
