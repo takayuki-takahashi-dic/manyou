@@ -1,18 +1,24 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  include SearchHelper
 
   # GET /tasks
   # GET /tasks.json
   # 初期状態は作成日時で降順
   def index
+    sort_column    = params[:column].presence || 'id'
+    @tasks      = Task.order(sort_column + ' ' + sort_direction)
+                            .page(params[:page]).per(10)
+                            .search(task_search_params)
     @search_params = task_search_params
-    # @tasks = Task.search(@search_params)
-
-    if params[:sort]
-      @tasks = Task.search(@search_params).page(params[:page]).per(5).order(params[:sort])
-    else
-      @tasks = Task.search(@search_params).page(params[:page]).per(5).order(created_at: "desc") # 初期状態は作成日時で降順
-    end
+    # @search_params = task_search_params
+    # # @tasks = Task.search(@search_params)
+    #
+    # if params[:sort]
+    #   @tasks = Task.search(@search_params).page(params[:page]).per(5).order(params[:sort])
+    # else
+    #   @tasks = Task.search(@search_params).page(params[:page]).per(5).order(created_at: "desc") # 初期状態は作成日時で降順
+    # end
     # @tasks = Task.search(params[:search])
     # @tasks = Task.search(@search_params).includes(:content)
   end
