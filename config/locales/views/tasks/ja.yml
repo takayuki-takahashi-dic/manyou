@@ -22,6 +22,9 @@ ja:
       created_at asc: 作成日時(昇順)
       deadline desc: 終了期限(降順)
       deadline asc: 終了期限(昇順)
+      waiting: 未着手
+      working: 着手
+      completed: 完了
     new:
       Back: 戻る
       New Task: 新規作成
