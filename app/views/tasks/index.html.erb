@@ -13,7 +13,7 @@
   <%= f.label(:title, 'title') %>
   <%= f.text_field :title, value: @search_params[:title] %>
 
-  <%= f.collection_radio_buttons(:dead, Task.statuses, :first, :first) do |r| %>
+  <%= f.collection_radio_buttons(:status, Task.statuses, :first, :first) do |r| %>
   <!-- r.valueと@search_params[:gender]が一致した場合はcheckedにtrueを設定する-->
   <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
 <% end %>

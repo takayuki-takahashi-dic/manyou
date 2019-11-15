@@ -5,11 +5,11 @@ class TasksController < ApplicationController
   # GET /tasks.json
   # 初期状態は作成日時で降順
   def index
-    # if params[:sort]
-    # @tasks = Task.all.order(params[:sort])
-    # else
-    # @tasks = Task.all.order(created_at: "desc") # 初期状態は作成日時で降順
-    # end
+    if params[:sort]
+      @tasks = Task.all.order(params[:sort])
+    else
+      @tasks = Task.all.order(created_at: "desc") # 初期状態は作成日時で降順
+    end
     # @tasks = Task.search(params[:search])
     @search_params = task_search_params
     @tasks = Task.search(@search_params)
