@@ -4,12 +4,18 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   # 初期状態は作成日時で降順
+  include SearchHelper
+
   def index
-      if params[:sort]
-      @tasks = Task.search(params[:search]).order(params[:sort]).page(params[:page]).per(5)
-      else
-      @tasks = Task.search(params[:search]).order(created_at: "desc").page(params[:page]).per(5)
-      end
+    sort_column    = params[:column].presence || 'id'
+    @tasks      = Task.order(sort_column + ' ' + sort_direction)
+                            .page(params[:page]).per(10)
+                            .search(search_params)
+    @search_params = search_params
+  end
+
+   def search_params
+    params.permit(:title, :content, :deadline, :status, :priority)
   end
   # GET /tasks/1
   # GET /tasks/1.json
