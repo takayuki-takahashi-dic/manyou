@@ -1,15 +1,18 @@
 <p id="notice"><%= notice %></p>
-
-<h1><%= t('.index_title') %></h1>
 <%= link_to t('.index'), tasks_path %>
 
-<%= link_to t('.created_at desc'), sort: "created_at desc" %>
-<%= link_to t('.created_at asc'), sort: "created_at asc" %>
-<%= link_to t('.deadline desc'), sort: "deadline desc" %>
-<%= link_to t('.deadline asc'), sort: "deadline asc" %>
+
+<h1><%= t('.index_title') %></h1>
 
   <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-  <%= form.text_field :title, class: "form-control", value: @search_params[:title] %>
+  <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"タイトル or 詳細" %>
+
+  <%= form.collection_radio_buttons(:status, Task.statuses, :first, :first) do |r| %>
+  <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
+  <% end %>
+
+  <%= form.collection_select(:priority, Task.all, :priority, :priority, selected: @search_params[:priority], include_blank: '選択') %>
+
   <%= form.submit '検索', class: 'btn btn-primary pull-right' %>
   <% end %>
 </div>

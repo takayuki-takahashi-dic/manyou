@@ -4,17 +4,22 @@ class Task < ApplicationRecord
   enum status: { waiting: 0, working: 1, completed: 2 }
   enum priority: { low: 0, middle: 1, high: 2 }
 
-  def self.search(params)
-    title       = params[:title]
-    # author_name = params[:author]
-    # year_from   = params[:publication_year_from]
-    # year_to     = params[:publication_year_to]
-    @tasks   = Task.all
-    # if author_name.present?
-    #   author = Author.find_by(name: author_name)
-    #   @articles = @articles.where(author_id: author.id) if author.present?
-    # end
-    @tasks = @tasks.where("title like ?", "%#{title}%") if title.present?
-    @tasks
-  end
+  # def self.search(params)
+  #   title       = params[:title]
+  #   @tasks   = Task.all
+  #   @tasks = @tasks.where("title like ?", "%#{title}%") if title.present?
+  #   @tasks
+  # end
+  #
+  scope :search, -> (search_params) do
+    return if search_params.blank?
+
+    title_like(search_params[:title])
+      .status_is(search_params[:status])
+      .priority_is(search_params[:priority])
+    end
+
+  scope :title_like, -> (title) { where(['title LIKE ? OR content  LIKE ?', "%#{title}%", "%#{title}%"]) if title.present? }
+  scope :status_is, -> (status) { where(status: status) if status.present? }
+  scope :priority_is, -> (priority) { where(priority: priority) if priority.present? }
 end
