@@ -31,6 +31,10 @@
     <%= form.select :status, Task.enum_options_for_select(:status) %>
   </div>
 
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.select :priority, Task.enum_options_for_select(:priority) %>
+  </div>
 
 
 
