@@ -6,11 +6,11 @@ class TasksController < ApplicationController
   # 初期状態は作成日時で降順
   def index
       if params[:sort]
-      @tasks = Task.all.order(params[:sort]).page(params[:page]).per(5)
+      @tasks = Task.search(params[:search]).order(params[:sort]).page(params[:page]).per(5)
       else
-      @tasks = Task.all.order(created_at: "desc").page(params[:page]).per(5)
+      @tasks = Task.search(params[:search]).order(created_at: "desc").page(params[:page]).per(5)
       end
-    end
+  end
   # GET /tasks/1
   # GET /tasks/1.json
   def show

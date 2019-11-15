@@ -8,6 +8,14 @@
 <%= link_to t('.deadline desc'), sort: "deadline desc" %>
 <%= link_to t('.deadline asc'), sort: "deadline asc" %>
 
+<div id="input-search">
+  <%= form_with(url: tasks_path, method: :get, local: true) do |f| %>
+    <%= f.text_field :search %>
+
+    <%= f.submit "search" %>
+  <% end %>
+</div>
+
 <table>
   <thead>
     <tr>
