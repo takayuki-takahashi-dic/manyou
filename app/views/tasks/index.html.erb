@@ -49,6 +49,7 @@
         <td><%= link_to t('.destroy'), task, method: :delete, data: { confirm: t('.confirm') } %></td>
       </tr>
     <% end %>
+    <%= paginate @tasks %>
   </tbody>
 </table>
 
