@@ -9,3 +9,14 @@ ja:
         updated_at: 更新日時
         title: タイトル
         content: 詳細
+        deadline: 終了期日
+        status: ステータス
+        priority: 優先順位
+      task/status:
+        waiting: 未着手
+        working: 着手
+        completed: 完了
+      task/priority:
+        low: 低
+        middle: 中
+        high: 高

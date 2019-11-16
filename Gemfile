@@ -46,6 +46,8 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development do
@@ -67,5 +69,8 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'rails-i18n'
+  gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+  gem 'rails-i18n'
+  gem 'kaminari'
+  gem 'bootstrap'
+  gem 'jquery-rails'
