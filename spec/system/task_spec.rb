@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :system do
-  before do
-    5.times {@task = FactoryBot.create(:task)}
+  before(:all) do
+    15.times {@task = FactoryBot.create(:task)}
+  end
+  after(:all) do
+    DatabaseCleaner.clean_with(:truncation)
   end
 
   describe 'タスク一覧画面' do
@@ -38,8 +41,8 @@ RSpec.describe Task, type: :system do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示されたページに遷移すること' do
         visit tasks_path
-        all('tbody tr').last.click_link 'Show'
-        expect(page).to have_content 'TEST_TITLE11'
+        all('tbody tr').last.click_link '詳細'
+        expect(page).to have_content 'TEST_CONTENT1'
       end
     end
   end
@@ -48,8 +51,8 @@ RSpec.describe Task, type: :system do
     context 'タスクが作成日時の降順に並んでいるかのテスト' do
       it '最初のshowlinkをクリックすると、最後に作成したタスクの内容が表示されたページに遷移すること' do
         visit tasks_path
-        first(:link, 'Show').click
-        expect(page).to have_content 'TEST_TITLE20'
+        first(:link, '詳細').click
+        expect(page).to have_content 'TEST_TITLE15'
       end
     end
   end
