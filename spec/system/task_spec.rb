@@ -15,6 +15,13 @@ RSpec.describe Task, type: :system do
         expect(page).to have_content 'TEST_TITLE'
       end
     end
+    context 'タスクが作成日時の降順に並んでいるかのテスト' do
+      it '最初のshowlinkをクリックすると、最後に作成したタスクの内容が表示されたページに遷移すること' do
+        visit tasks_path
+        first(:link, '詳細').click
+        expect(page).to have_content 'TEST_TITLE15'
+      end
+    end
   end
 
   describe 'タスク登録画面' do
@@ -25,14 +32,10 @@ RSpec.describe Task, type: :system do
         fill_in '詳細', with: 'TEST_CONTENT'
         click_on '登録する' #
         expect(page).to have_content 'TEST_CONTENT'
-        # <%= form.label :title %>が生成した
-        # <label for="task_title">Title</label>の
+        # <%= form.label :title %>が生成した<label for="task_title">Title</label>の
         # 'Title'にwith: 'TEST_TITLE'をfill_in
-
-        # <%= form.submit %>が生成した
-        # <input type="submit" name="commit" value="Create Task" data-disable-with="Create Task">に
+        # <%= form.submit %>が生成した<input type="submit" name="commit" value="Create Task" data-disable-with="Create Task">に
         # click_on 'Create Task'
-
         end
       end
     end
@@ -47,13 +50,4 @@ RSpec.describe Task, type: :system do
     end
   end
 
-  describe 'タスク一覧画面' do
-    context 'タスクが作成日時の降順に並んでいるかのテスト' do
-      it '最初のshowlinkをクリックすると、最後に作成したタスクの内容が表示されたページに遷移すること' do
-        visit tasks_path
-        first(:link, '詳細').click
-        expect(page).to have_content 'TEST_TITLE15'
-      end
-    end
-  end
 end

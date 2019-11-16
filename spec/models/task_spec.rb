@@ -20,4 +20,36 @@ RSpec.describe Task, type: :model do
       expect(task).to be_valid
     end
   end
+
+  describe '検索' do
+    before(:all) do
+      15.times {@task = FactoryBot.create(:task)}
+    end
+    after(:all) do
+      DatabaseCleaner.clean_with(:truncation)
+    end
+    context '検索フォームのみ' do
+      it '任意の文字列がtitleカラムかcontentカラムにあればその情報を出力する' do
+        expect(Task.search("5")).to include(@tasks.find(5))
+      end
+    end
+    context 'ラジオボタンのみ' do
+    end
+    context 'プルダウンのみ' do
+    end
+    context '検索フォーム + ラジオボタン' do
+    end
+    context '検索フォーム + プルダウン' do
+    end
+    context 'プルダウン + ラジオボタン' do
+    end
+    context '検索フォーム + プルダウン + ラジオボタン' do
+    end
+    context '何も選択されていない' do
+    end
+  end
+
+
+
+
 end
