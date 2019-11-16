@@ -1,24 +1,24 @@
 <p id="notice"><%= notice %></p>
+<h1 class="display-4"><%= t('.index_title') %></h1>
 
-<div class="container">
-
-
-<%= link_to t('.index'), tasks_path %>
-
-
-<h1><%= t('.index_title') %></h1>
 
   <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-  <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"タイトル or 詳細" %>
-
-  <%= form.collection_radio_buttons(:status, Task.statuses, :first, :first) do |r| %>
-  <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
-  <% end %>
-
-  <%= form.collection_select(:priority, Task.all, :priority, :priority, include_blank: '選択') %>
-
-  <%= form.submit '検索', class: 'btn btn-primary pull-right' %>
-  <% end %>
+  <div class="row">
+            <div class="col-md-3 mb-3">
+              <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"タイトル or 詳細" %>
+            </div>
+            <div class="col-md-3 mb-3">
+              <%= form.collection_select(:priority, Task.all, :priority, :priority,{prompt: t('.priority')}, {class: "form-control"}) %>
+            </div>
+            <div class="col-md-3 mb-3">
+              <%= form.collection_select(:status, Task.all, :status, :status,{prompt: t('.status')}, {class: "form-control"}) %>
+            </div>
+            <div class="col-md-3 mb-3">
+            <%= form.submit '検索', class: 'btn btn-primary' %>
+            <%= link_to t('クリア'), tasks_path,class: 'btn btn-secondary' %>
+            </div>
+      </div>
+    <% end %>
 
 <div class="table-responsive">
 <table class="table table-striped table-hover">
@@ -58,7 +58,6 @@
     </tr>
 
   <tbody>
-    <!-- On cells (`td` or `th`) -->
     <% @tasks.each do |task| %>
 
       <tr>
@@ -78,6 +77,3 @@
 </table>
 </div>
 <br>
-
-<%= link_to t('.new'), new_task_path %>
-</div>
