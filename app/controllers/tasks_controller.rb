@@ -1,24 +1,17 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
-  # GET /tasks
-  # GET /tasks.json
-  # 初期状態は作成日時で降順
   include SearchHelper
 
+  # GET /tasks
   def index
-    sort_column    = params[:column].presence || 'id'
-    @tasks      = Task.order(sort_column + ' ' + sort_direction)
-                            .page(params[:page]).per(10)
-                            .search(search_params)
+    sort_column = params[:column].presence || 'created_at'
+    @tasks = Task.order(sort_column + ' ' + sort_direction)
+                 .page(params[:page]).per(10)
+                 .search(search_params)
     @search_params = search_params
   end
 
-   def search_params
-    params.permit(:title, :content, :deadline, :status, :priority)
-  end
   # GET /tasks/1
-  # GET /tasks/1.json
   def show
   end
 
@@ -72,17 +65,15 @@ class TasksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
       params.require(:task).permit(:title, :content, :deadline, :status, :priority)
     end
 
-    def task_search_params
-      params.fetch(:search, {}).permit(:title, :content, :deadline, :status, :priority)
+    def search_params
+      params.permit(:title, :content, :deadline, :status, :priority)
     end
 end

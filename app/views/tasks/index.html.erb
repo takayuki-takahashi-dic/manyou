@@ -11,7 +11,7 @@
   <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
   <% end %>
 
-  <%= form.collection_select(:priority, Task.all, :priority, :priority, selected: @search_params[:priority], include_blank: '選択') %>
+  <%= form.collection_select(:priority, Task.all, :priority, :priority, include_blank: '選択') %>
 
   <%= form.submit '検索', class: 'btn btn-primary pull-right' %>
   <% end %>
