@@ -42,7 +42,7 @@ RSpec.describe Task, type: :system do
       it '該当タスクの内容が表示されたページに遷移すること' do
         visit tasks_path
         all('tbody tr').last.click_link '詳細'
-        expect(page).to have_content 'TEST_CONTENT1'
+        expect(page).to have_content 'TEST_CONTENT6'
       end
     end
   end
