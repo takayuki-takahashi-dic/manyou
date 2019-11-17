@@ -1,4 +1,5 @@
 require 'rails_helper'
+# $ bin/rspec ./spec/system/task_spec.rb
 
 RSpec.describe Task, type: :system do
   before(:all) do
@@ -8,7 +9,7 @@ RSpec.describe Task, type: :system do
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  describe 'タスク一覧画面' do
+  describe 'タスク一覧画面/index' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
         visit tasks_path
@@ -22,9 +23,32 @@ RSpec.describe Task, type: :system do
         expect(page).to have_content 'TEST_TITLE15'
       end
     end
+
+    context 'フォーム検索結果が表示されているかのテスト' do
+      it 'フォームに文字列を入力し、検索ボタンをクリックすると、
+      tilteカラムで同じ文字列を持つ情報のみを表示すること' do
+        visit tasks_path
+        fill_in 'title', with: '7' #
+        click_on '検索' #
+        expect(page).to have_content 'TEST_TITLE7'
+        expect(page).to_not have_content 'TEST_TITLE8'
+
+      end
+    end
+    context 'フォーム検索結果が表示されているかのテスト' do
+      it 'フォームに文字列を入力し、検索ボタンをクリックすると、
+      contentカラムで同じ文字列を持つ情報のみを表示すること' do
+        visit tasks_path
+        fill_in 'title', with: '6' #
+        click_on '検索' #
+        expect(page).to have_content 'TEST_CONTENT6'
+        expect(page).to_not have_content 'TEST_CONTENT7'
+      end
+    end
+
   end
 
-  describe 'タスク登録画面' do
+  describe 'タスク登録画面/new' do
     context '必要項目を入力して、createボタンを押した場合' do
       it 'データが保存されること' do
         visit new_task_path
@@ -40,7 +64,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-  describe 'タスク詳細画面' do
+  describe 'タスク詳細画面/show' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示されたページに遷移すること' do
         visit tasks_path
@@ -50,4 +74,22 @@ RSpec.describe Task, type: :system do
     end
   end
 
+  describe '終了期限のテスト' do
+    context '終了期限でソートした場合' do
+      it '終了期限の▲をクリックすると、終了期限が早い順にソートされる。' do
+        visit tasks_path
+        click_on 'deadline▲'
+        first(:link, '詳細').click
+        expect(page).to have_content '2019-12-01'
+      end
+      # it '終了期限の▼をクリックすると、終了期限が遅い順にソートされる。' do
+      #
+      # end
+    end
+  end
+
+  # describe 'ステータスのテスト'
+  #   context 'ステータスで検索した場合'
+  #     it 'セレクトボックスで”完了”を選択し、検索ボタンをクリックすると、
+  #     ”完了”のステータスを持つ情報のみがindexに表示される'
 end

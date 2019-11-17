@@ -30,7 +30,6 @@ RSpec.describe Task, type: :model do
     end
     context '検索フォームのみ' do
       it '任意の文字列がtitleカラムかcontentカラムにあればその情報を出力する' do
-        expect(Task.search("5")).to include(@tasks.find(5))
       end
     end
     context 'ラジオボタンのみ' do
