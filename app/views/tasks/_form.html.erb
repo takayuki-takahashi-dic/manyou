@@ -11,34 +11,39 @@
     </div>
   <% end %>
 
-  <div class="field">
+<div class="col-md-6 mb-6">
+<form>
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title ,class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :content %>
-    <%= form.text_area :content %>
+    <%= form.text_area :content ,class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :deadline %>
-    <%= form.date_select :deadline %>
+    <%= form.date_select :deadline, {use_month_numbers: true}, {class: "form-control"} %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :status %>
-    <%= form.select :status, Task.enum_options_for_select(:status) %>
+    <%= form.select :status, Task.enum_options_for_select(:status), {}, {class: "form-control"} %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :priority %>
-    <%= form.select :priority, Task.enum_options_for_select(:priority) %>
+    <%= form.select :priority, Task.enum_options_for_select(:priority), {}, {class: "form-control"} %>
   </div>
 
 
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit '新規作成', class: "btn btn-primary" %>
   </div>
 <% end %>
+
+</form>
+  </div>
