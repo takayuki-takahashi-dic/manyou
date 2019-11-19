@@ -1,13 +1,13 @@
 ja:
   activerecord:
     models:
-      task: タスク
+      task: タスク # # view側： Task.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
     attributes:
       task:
         id: ID
         created_at: 登録日時
         updated_at: 更新日時
-        title: タイトル
+        title: タイトル # view側： Task.human_attribute_name :title => "名前" /　t("activerecord.attributes.user.name")と同じ
         content: 詳細
         deadline: 終了期日
         status: ステータス

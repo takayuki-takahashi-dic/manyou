@@ -3,7 +3,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :system do
   before(:all) do
-    15.times {@task = FactoryBot.create(:task)}
+    15.times {@task = create(:task)}
   end
   after(:all) do
     DatabaseCleaner.clean_with(:truncation)
@@ -54,7 +54,7 @@ RSpec.describe Task, type: :system do
         visit new_task_path
         fill_in 'タイトル', with: 'TEST_TITLE' #
         fill_in '詳細', with: 'TEST_CONTENT'
-        click_on '登録する' #
+        click_on '新規作成' #
         expect(page).to have_content 'TEST_CONTENT'
         # <%= form.label :title %>が生成した<label for="task_title">Title</label>の
         # 'Title'にwith: 'TEST_TITLE'をfill_in
@@ -79,12 +79,19 @@ RSpec.describe Task, type: :system do
       it '終了期限の▲をクリックすると、終了期限が早い順にソートされる。' do
         visit tasks_path
         click_on 'deadline▲'
+        sleep 2
         first(:link, '詳細').click
-        expect(page).to have_content '2019-12-01'
+        expect(page).to have_content 'TEST_TITLE1'
+        # expect(find(.css_class_id) 取得要素を限定する
       end
-      # it '終了期限の▼をクリックすると、終了期限が遅い順にソートされる。' do
-      #
-      # end
+      it '終了期限の▼をクリックすると、終了期限が遅い順にソートされる。' do
+        visit tasks_path
+        click_on 'deadline▼'
+        sleep 2
+        first(:link, '詳細').click
+        expect(page).to have_content 'TEST_TITLE15'
+        # expect(all('div.container')).to have_content 'TEST_TITLE15'
+      end
     end
   end
 

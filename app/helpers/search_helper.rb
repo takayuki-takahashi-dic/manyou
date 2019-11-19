@@ -10,7 +10,7 @@ module SearchHelper
   def sort_desc(column_to_be_sorted, search_params = nil)
     opts = { column: column_to_be_sorted, direction: "desc" }
     opts.merge!(search_params) if search_params.present?
-    link_to "▼", opts, { id: column_to_be_sorted }
+    link_to "▼", opts, { id: column_to_be_sorted + "▼" }
   end
 
   def sort_direction
