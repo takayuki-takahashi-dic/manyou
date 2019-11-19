@@ -87,7 +87,7 @@ RSpec.describe Task, type: :system do
       it '終了期限の▼をクリックすると、終了期限が遅い順にソートされる。' do
         visit tasks_path
         click_on 'deadline▼'
-        sleep 2
+        sleep 2 #ロードを待つため
         first(:link, '詳細').click
         expect(page).to have_content 'TEST_TITLE15'
         # expect(all('div.container')).to have_content 'TEST_TITLE15'
@@ -95,8 +95,15 @@ RSpec.describe Task, type: :system do
     end
   end
 
-  # describe 'ステータスのテスト'
-  #   context 'ステータスで検索した場合'
-  #     it 'セレクトボックスで”完了”を選択し、検索ボタンをクリックすると、
-  #     ”完了”のステータスを持つ情報のみがindexに表示される'
+  describe 'ステータスのテスト'
+    context 'ステータスで検索した場合'
+      fit 'セレクトボックスで”完了”を選択し、検索ボタンをクリックすると、
+      ”完了”のステータスを持つ情報のみがindexに表示される' do
+        visit tasks_path
+        select '完了', from: 'status'
+        click_button '検索'
+        expect(find('.table-responsive')).to have_content '完了'
+        expect(find('.table-responsive')).to_not have_content '着手'
+        # find('.table-responsive') テーブル要素の中身を検索
+      end
 end
