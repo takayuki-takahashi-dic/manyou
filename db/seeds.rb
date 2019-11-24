@@ -15,3 +15,18 @@
                password_confirmation: password,
               )
 end
+1.upto(10) do |n|
+  title = Faker::Games::Pokemon.location
+  content = Faker::Games::Pokemon.move
+  deadline = Faker::Date.forward(days: 10)
+  status = Faker::Number.between(from: 0, to: 2)
+  priority = Faker::Number.between(from: 0, to: 2)
+  user_id = Faker::Number.between(from: 1, to: 10)
+  Task.create!(title: title,
+               content: content,
+               deadline: deadline,
+               status: status,
+               priority: priority,
+               user_id: user_id,
+              )
+end
