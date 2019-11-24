@@ -1,10 +1,27 @@
-<p id="notice"><%= notice %></p>
 <h1><%= t '.show_title' %></h1>
 
-<p><%= t '.title' %>: <%= @task.title %></p>
-<p><%= t '.content' %>: <%= @task.content %></p>
-<p><%= t '.deadline' %>: <%= @task.deadline %></p>
-<p><%= t '.status' %>: <%= @task.human_attribute_enum(:status) %></p>
-<p><%= t '.priority' %>: <%= @task.human_attribute_enum(:priority) %></p>
-
-<%= link_to t('.Edit'), edit_task_path(@task) %> |
+<div class="table table-responsive" style="width: 36rem;">
+<table class="table table-bordered table-hover thead-light">
+    <tr>
+      <th style="width: 12rem;"><%= t '.title' %></th>
+      <td class="table-light"><%= @task.title %></td>
+    </tr>
+    <tr>
+      <th><%= t '.content' %></th>
+      <td class="table-light"><%= @task.content %></td>
+    </tr>
+    <tr>
+      <th><%= t '.deadline' %></th>
+      <td class="table-light"><%= @task.deadline %></td>
+    </tr>
+    <tr>
+      <th><%= t '.status' %></th>
+      <td class="table-light"><%= @task.human_attribute_enum(:status) %></td>
+    </tr>
+    <tr>
+      <th><%= t '.priority' %></th>
+      <td class="table-light"><%= @task.human_attribute_enum(:priority) %></td>
+    </tr>
+</table>
+</div><!--/table-responsive-->
+<%= link_to t('.Edit'), edit_task_path(@task) %>

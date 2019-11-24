@@ -1,8 +1,14 @@
 class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :content, length: { maximum: 255 }
+
   enum status: { waiting: 0, working: 1, completed: 2 }
   enum priority: { low: 0, middle: 1, high: 2 }
+
+  # validates :status, inclusion: {in: Task.statuses.keys }
+  # validates :priority, inclusion: {in: Task.priorities.keys}
+  # # Task.statuses.keys => ["waiting", "working", "completed"]
+
 
   scope :search, -> (search_params) do
     return if search_params.blank?
@@ -14,5 +20,4 @@ class Task < ApplicationRecord
                                 "%#{title}%", "%#{title}%"]) if title.present? }
   scope :status_is, -> (status) { where(status: status) if status.present? }
   scope :priority_is, -> (priority) { where(priority: priority) if priority.present? }
-
 end
