@@ -57,10 +57,6 @@ RSpec.describe Task, type: :system do
       it 'タイトルと詳細に入力して、新規作成を押すとデータが保存されること' do
         click_on '新規作成' #
         expect(page).to have_content 'TEST_CONTENT'
-        # <%= form.label :title %>が生成した<label for="task_title">Title</label>の
-        # 'Title'にwith: 'TEST_TITLE'をfill_in
-        # <%= form.submit %>が生成した<input type="submit" name="commit" value="Create Task" data-disable-with="Create Task">に
-        # click_on 'Create Task'
       end
       it 'ステータスの選択フォームで選択した項目のデータが保存されること' do
         select '完了', from: 'ステータス'
@@ -72,7 +68,7 @@ RSpec.describe Task, type: :system do
         click_on '新規作成'
         expect(page).to have_content '2020'
       end
-      it '終了期日の選択フォームで選択した項目のデータが保存されること' do
+      it '優先順位の選択フォームで選択した項目のデータが保存されること' do
         select '高', from: '優先順位'
         click_on '新規作成'
         expect(page).to have_content '高'

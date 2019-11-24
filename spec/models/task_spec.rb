@@ -21,18 +21,14 @@ RSpec.describe Task, type: :model do
         expect(task).to be_valid
       end
     end
-    context 'status/priority' do
-      fit "statusに入力された値が0/1/2以外ならバリデーションが通らない" do
+    context 'deadline' do
+      it "deadlineがタスク作成日よりも早い場合、バリデーションが通らない" do
         task = Task.new(title: "t",
                         content: "t",
-                        deadline: "20191231",
-                        status: "work",
+                        deadline: Date.today - 1,
+                        status: 2,
                         priority: 1)
         expect(task).not_to be_valid
-      end
-      it "priorityに入力された値が0/1/2以外ならバリデーションが通らない" do
-      end
-      it "statusとpriorityに入力された値が0/1/2のどれかならバリデーションが通る" do
       end
     end
   end

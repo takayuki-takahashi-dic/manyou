@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 50 }
   validates :content, length: { maximum: 255 }
+  validate :not_before_today
 
   enum status: { waiting: 0, working: 1, completed: 2 }
   enum priority: { low: 0, middle: 1, high: 2 }
@@ -8,7 +9,10 @@ class Task < ApplicationRecord
   # validates :status, inclusion: {in: Task.statuses.keys }
   # validates :priority, inclusion: {in: Task.priorities.keys}
   # # Task.statuses.keys => ["waiting", "working", "completed"]
-
+  # enumにバリデーションは不要
+  def not_before_today
+      errors.add(:deadline, :not_before_today) if deadline.nil? || deadline < Date.today
+  end
 
   scope :search, -> (search_params) do
     return if search_params.blank?
