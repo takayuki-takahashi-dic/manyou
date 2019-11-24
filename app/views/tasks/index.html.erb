@@ -1,66 +1,72 @@
 <p id="notice"><%= notice %></p>
-<%= link_to t('.index'), tasks_path %>
-
-
 <h1><%= t('.index_title') %></h1>
 
   <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-  <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"タイトル or 詳細" %>
-
-  <%= form.collection_radio_buttons(:status, Task.statuses, :first, :first) do |r| %>
-  <%= r.radio_button(checked: r.value == @search_params[:status]) + r.text %>
+  <div class="row">
+            <div class="col-md-3 mb-3">
+              <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"#{Task.human_attribute_name :title} or #{Task.human_attribute_name :content}" %>
+            </div>
+            <div class="col-md-3 mb-3">
+              <%= form.select :status, Task.enum_options_for_select(:status), {prompt: "#{Task.human_attribute_name :status}"}, { class: "form-control" } %>
+            </div>
+            <div class="col-md-3 mb-3">
+              <%= form.select :priority, Task.enum_options_for_select(:priority), {prompt: "#{Task.human_attribute_name :priority}"}, { class: "form-control" } %>
+            </div>
+            <div class="col-md-3 mb-3">
+              <%= form.submit '検索', class: 'btn btn-primary' %>
+              <%= link_to t('クリア'), tasks_path,class: 'btn btn-secondary' %>
+            </div>
+      </div>
   <% end %>
 
-  <%= form.collection_select(:priority, Task.all, :priority, :priority, include_blank: '選択') %>
-
-  <%= form.submit '検索', class: 'btn btn-primary pull-right' %>
-  <% end %>
-</div>
-
-<table>
-  <thead>
-    <tr>
+<div class="table-responsive">
+<table class="table table-striped table-hover">
+<tr>
       <th>
-        <%= t '.created_at' %>
+        <%= Task.human_attribute_name :created_at %>
         <%= sort_asc('created_at', @search_params) %>
         <%= sort_desc('created_at', @search_params) %>
       </th>
       <th>
-        <%= t '.deadline' %>
-        <%= sort_asc('deadline', @search_params) %>
-        <%= sort_desc('deadline', @search_params) %>
-      </th>
-      <th><%= t '.title' %>
+        <%= Task.human_attribute_name :title %>
         <%= sort_asc('title', @search_params) %>
         <%= sort_desc('title', @search_params) %>
       </th>
       <th>
-        <%= t '.content' %>
+        <%= Task.human_attribute_name :content %>
         <%= sort_asc('content', @search_params) %>
         <%= sort_desc('content', @search_params) %>
       </th>
       <th>
-        <%= t '.status' %>
+        <%= Task.human_attribute_name :status %>
         <%= sort_asc('status', @search_params) %>
         <%= sort_desc('status', @search_params) %>
       </th>
       <th>
-        <%= t '.priority' %>
+        <%= Task.human_attribute_name :priority %>
         <%= sort_asc('priority', @search_params) %>
         <%= sort_desc('priority', @search_params) %>
       </th>
+      <th>
+        <%= Task.human_attribute_name :deadline %>
+        <%= sort_asc('deadline', @search_params) %>
+        <%= sort_desc('deadline', @search_params) %>
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
-  </thead>
 
   <tbody>
     <% @tasks.each do |task| %>
+
       <tr>
         <td><%= task.created_at.strftime('%m/%d %R') %></td>
-        <td><%= task.deadline %></td>
         <td><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= task.human_attribute_enum(:status) %></td>
         <td><%= task.human_attribute_enum(:priority) %></td>
+        <td><%= task.deadline %></td>
         <td><%= link_to t('.show'), task %></td>
         <td><%= link_to t('.edit'), edit_task_path(task) %></td>
         <td><%= link_to t('.destroy'), task, method: :delete, data: { confirm: t('.confirm') } %></td>
@@ -69,7 +75,4 @@
     <%= paginate @tasks %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to t('.new'), new_task_path %>
+</div>
