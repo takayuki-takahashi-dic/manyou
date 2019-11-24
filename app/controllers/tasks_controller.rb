@@ -1,6 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :eunsure_logged_in?, only: [:show, :edit, :update, :destroy, :index, :new]
   include SearchHelper
+
+
 
   # GET /tasks
   def index
@@ -76,4 +79,12 @@ class TasksController < ApplicationController
     def search_params
       params.permit(:title, :content, :deadline, :status, :priority)
     end
+
+    def eunsure_logged_in?
+      unless logged_in?
+        redirect_to new_session_path, danger:"権限がありません"
+      end
+
+    end
+
 end
