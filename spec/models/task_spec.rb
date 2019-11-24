@@ -1,4 +1,5 @@
 require 'rails_helper'
+# bin/rspec ./spec/models/task_spec.rb
 
 RSpec.describe Task, type: :model do
   describe 'バリデーション' do
@@ -17,7 +18,7 @@ RSpec.describe Task, type: :model do
         expect(task).not_to be_valid
       end
       it "titleが50文字以内かつcontentが255文字以内で記載されていればバリデーションが通る" do
-        task = Task.new(title: t * 50, content: t * 255)
+        task = Task.new(title: t * 50, content: t * 255, deadline: Date.today)
         expect(task).to be_valid
       end
     end
@@ -35,32 +36,39 @@ RSpec.describe Task, type: :model do
 
   describe '検索' do
     before(:all) do
-      15.times {@task = FactoryBot.create(:task)}
+      15.times {@task = create(:task)}
     end
     after(:all) do
       DatabaseCleaner.clean_with(:truncation)
     end
-    context '検索フォームのみ' do
-      it '任意の文字列がtitleカラムかcontentカラムにあればその情報を出力する' do
+    context '文字列入力フォームの検索' do
+      it 'titleに"1"が含まれる要素のみ取得する' do
+        search_params = {title: "1", status: "", priority: "" }
+        expect(Task.search(search_params)).to include(Task.find(1))
+        expect(Task.search(search_params).count).to be 7
+        expect(Task.search(search_params)).to_not include(Task.find(2))
       end
     end
-    context 'ラジオボタンのみ' do
+    context 'ステータスの検索' do
+      it 'statusが"completed"の要素のみ取得する' do
+        search_params = {title: "", status: "completed", priority: "" }
+        expect(Task.search(search_params)).to include(Task.find(3))
+        expect(Task.search(search_params)).to_not include(Task.find(2))
+      end
     end
-    context 'プルダウンのみ' do
+    context '優先順位の検索' do
+      it 'priority"middle"の要素のみ取得する' do
+        search_params = {title: "", status: "", priority: "middle" }
+        expect(Task.search(search_params)).to include(Task.find(2))
+        expect(Task.search(search_params)).to_not include(Task.find(3))
+      end
     end
-    context '検索フォーム + ラジオボタン' do
-    end
-    context '検索フォーム + プルダウン' do
-    end
-    context 'プルダウン + ラジオボタン' do
-    end
-    context '検索フォーム + プルダウン + ラジオボタン' do
-    end
-    context '何も選択されていない' do
+    context '何も選択されていない場合' do
+      it '検索パラメータが空の場合、全ての要素を取得する' do
+        search_params = {title: "", status: "", priority: "" }
+        expect(Task.search(search_params).count).to be 15
+      end
     end
   end
-
-
-
 
 end

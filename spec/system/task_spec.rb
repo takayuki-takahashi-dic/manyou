@@ -28,19 +28,16 @@ RSpec.describe Task, type: :system do
       it 'フォームに文字列を入力し、検索ボタンをクリックすると、
       tilteカラムで同じ文字列を持つ情報のみを表示すること' do
         visit tasks_path
-        fill_in 'title', with: '7' #
-        click_on '検索' #
+        fill_in 'title', with: '7'
+        click_on '検索'
         expect(page).to have_content 'TEST_TITLE7'
         expect(page).to_not have_content 'TEST_TITLE8'
-
       end
-    end
-    context 'フォーム検索結果が表示されているかのテスト' do
       it 'フォームに文字列を入力し、検索ボタンをクリックすると、
       contentカラムで同じ文字列を持つ情報のみを表示すること' do
         visit tasks_path
-        fill_in 'title', with: '6' #
-        click_on '検索' #
+        fill_in 'title', with: '6'
+        click_on '検索'
         expect(page).to have_content 'TEST_CONTENT6'
         expect(page).to_not have_content 'TEST_CONTENT7'
       end
@@ -51,11 +48,11 @@ RSpec.describe Task, type: :system do
     context '必要項目を入力して、createボタンを押した場合' do
       before do
         visit new_task_path
-        fill_in 'タイトル', with: 'TEST_TITLE' #
+        fill_in 'タイトル', with: 'TEST_TITLE'
         fill_in '詳細', with: 'TEST_CONTENT'
       end
       it 'タイトルと詳細に入力して、新規作成を押すとデータが保存されること' do
-        click_on '新規作成' #
+        click_on '新規作成'
         expect(page).to have_content 'TEST_CONTENT'
       end
       it 'ステータスの選択フォームで選択した項目のデータが保存されること' do
@@ -65,8 +62,10 @@ RSpec.describe Task, type: :system do
       end
       it '終了期日の選択フォームで選択した項目のデータが保存されること' do
         select '2020', from: 'task[deadline(1i)]'
+        select '12', from: 'task[deadline(2i)]'
+        select '18', from: 'task[deadline(3i)]'
         click_on '新規作成'
-        expect(page).to have_content '2020'
+        expect(page).to have_content '2020-12-18'
       end
       it '優先順位の選択フォームで選択した項目のデータが保存されること' do
         select '高', from: '優先順位'
