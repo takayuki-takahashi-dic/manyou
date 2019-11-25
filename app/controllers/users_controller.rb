@@ -2,6 +2,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
   def new
+    if logged_in?
+      redirect_to user_path(current_user.id), danger:"既にログインしています。"
+    end
     @user = User.new
   end
 
@@ -16,6 +19,9 @@ class UsersController < ApplicationController
   end
 
   def show
+      if @user.id != current_user.id
+        redirect_to user_path(current_user.id), danger:"権限がありません"
+      end
   end
 
   private
@@ -28,5 +34,6 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
+
 
 end

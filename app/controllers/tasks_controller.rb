@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :eunsure_logged_in?, only: [:show, :edit, :update, :destroy, :index, :new]
+  before_action :ensure_current_user, only: [:show, :edit, :update, :destroy,]
   include SearchHelper
-
-
 
   # GET /tasks
   def index
@@ -11,6 +10,7 @@ class TasksController < ApplicationController
     @tasks = Task.order(sort_column + ' ' + sort_direction)
                  .page(params[:page]).per(10)
                  .search(search_params)
+                 .only_current_user(current_user.id)
     @search_params = search_params
   end
 
@@ -30,7 +30,8 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    # @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
       if @task.save
@@ -84,7 +85,15 @@ class TasksController < ApplicationController
       unless logged_in?
         redirect_to new_session_path, danger:"権限がありません"
       end
-
     end
+
+    def ensure_current_user
+      @task = Task.find_by(id:params[:id])
+      if @task.user_id != current_user.id
+        redirect_to tasks_path, danger:"権限がありません"
+      end
+    end
+
+
 
 end
