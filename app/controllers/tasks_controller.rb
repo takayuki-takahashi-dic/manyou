@@ -83,17 +83,14 @@ class TasksController < ApplicationController
 
     def eunsure_logged_in?
       unless logged_in?
-        redirect_to new_session_path, danger:"権限がありません"
+        redirect_to new_session_path, danger: t('.notice')
       end
     end
 
     def ensure_current_user
       @task = Task.find_by(id:params[:id])
       if @task.user_id != current_user.id
-        redirect_to tasks_path, danger:"権限がありません"
+        redirect_to tasks_path, danger: t('.notice')
       end
     end
-
-
-
 end

@@ -214,3 +214,9 @@ ja:
     destroy:
       notice: "タスクを削除しました！"
       alert: "%{resource_name} could not be destroyed."
+    show:
+      notice: "権限がありません"
+    index:
+      notice: "ログインしてください"
+    ensure_current_user:
+      notice: "権限がありません"
