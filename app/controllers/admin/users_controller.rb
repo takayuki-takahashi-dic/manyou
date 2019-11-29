@@ -23,9 +23,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-      if @user.id != current_user.id
-        redirect_to user_path(current_user.id), danger:"権限がありません"
-      end
+      # if @user.id != current_user.id
+      #   redirect_to user_path(current_user.id), danger:"権限がありません"
+      # end
+      @tasks = @user.tasks
   end
 
   private
