@@ -3,12 +3,14 @@
 <tr>
   <th>user</th>
   <th>email</th>
+  <th>tasks_number</th>
 </tr>
 <tbody>
   <% @users.each do |user| %>
   <tr>
     <td><%= user.name %></td>
     <td><%= user.email %></td>
+    <td><%= user.tasks.size %></td>
   </tr>
   <% end %>
 </tbody>
