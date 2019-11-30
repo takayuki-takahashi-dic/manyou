@@ -24,5 +24,7 @@
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
 
+  <%= f.check_box 'admin',{},checked_value = "true",unchecked_value = "false" %>
+
   <%= f.submit "Edit this account" %>
 <% end %>
