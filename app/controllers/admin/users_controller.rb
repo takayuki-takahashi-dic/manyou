@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.preload(:tasks)
@@ -28,6 +28,30 @@ class Admin::UsersController < ApplicationController
       # end
       @tasks = @user.tasks
   end
+
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to admin_user_path(@user.id), success: t('.notice') }
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.html { render :edit }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @user.destroy
+    respond_to do |format|
+      format.html { redirect_to admin_users_url, danger: t('.notice') }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
 

@@ -4,6 +4,9 @@
   <th>user</th>
   <th>email</th>
   <th>tasks_number</th>
+  <th></th>
+  <th></th>
+  <th></th>
 </tr>
 <tbody>
   <% @users.each do |user| %>
@@ -11,6 +14,9 @@
     <td><%= user.name %></td>
     <td><%= user.email %></td>
     <td><%= user.tasks.size %></td>
+    <td><%= link_to t('.show'), admin_user_path(user) %></td>
+    <td><%= link_to t('.edit'), edit_admin_user_path(user) %></td>
+    <td><%= link_to t('.destroy'), admin_user_path(user), method: :delete, data: { confirm: t('.confirm') } %></td>
   </tr>
   <% end %>
 </tbody>
