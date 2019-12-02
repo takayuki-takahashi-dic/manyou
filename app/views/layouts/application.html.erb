@@ -23,29 +23,32 @@
 
           <% if logged_in? %>
           <li class="nav-item">
-            <%= link_to "Profile", admin_user_path(current_user.id) ,class: 'nav-link'  %>
+            <%= link_to "Profile", user_path(current_user.id) ,class: 'nav-link'  %>
           </li>
           <li class="nav-item">
             <%= link_to "Logout", session_path(current_user.id) ,class: 'nav-link' , method: :delete %>
           </li>
           <% else %>
           <li class="nav-item">
-            <%= link_to "Sign up", new_admin_user_path ,class: 'nav-link'  %>
+            <%= link_to "Sign up", new_user_path ,class: 'nav-link'  %>
           </li>
           <li class="nav-item">
             <%= link_to "Login", new_session_path ,class: 'nav-link'  %>
           </li>
           <% end %>
 
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <%= link_to "New", new_task_path ,class: 'dropdown-item' %>
-              <%= link_to "New", new_task_path ,class: 'dropdown-item' %>
-              <%= link_to "New", new_task_path ,class: 'dropdown-item' %>
-              <%= link_to "New", new_task_path ,class: 'dropdown-item' %>
-            </div>
-          </li>
+
+          <% if logged_in? && admin? %>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Menu</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to "Admin Index", admin_users_path ,class: 'dropdown-item' %>
+                <%= link_to "Admin Profile", admin_user_path(current_user.id) ,class: 'dropdown-item' %>
+                <%= link_to "Admin New", new_admin_user_path ,class: 'dropdown-item' %>
+                <%= link_to "New", new_task_path ,class: 'dropdown-item' %>
+              </div>
+            </li>
+          <% end %>
         </ul>
       </div>
     </nav>
