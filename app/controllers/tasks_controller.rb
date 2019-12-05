@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :eunsure_logged_in?, only: [:show, :edit, :update, :destroy, :index, :new]
+  before_action :eunsure_logged_in?
   before_action :ensure_current_user, only: [:show, :edit, :update, :destroy,]
   include SearchHelper
 

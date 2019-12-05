@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
-  # after_update :admin_user_exist?
+  before_save :admin_user_exist?
 
   validates :name,  presence: true, length: { maximum: 30 }
   validates :email, uniqueness: true, presence: true, length: { maximum: 255 },
@@ -10,7 +10,9 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
 
   private
-  # def admin_user_exist?
-  #   self.name = "no admin" unless User.pluck("admin").include?(true)
-  # end
+  def admin_user_exist?
+    # throw(:abort) unless User.pluck("admin").include?(true)
+    errors.add(:base, "admin_user must exist")
+    throw(:abort) if User.pluck("admin").count(true) == 1 && User.find(self.id).admin == true && self.admin == false
+  end
 end

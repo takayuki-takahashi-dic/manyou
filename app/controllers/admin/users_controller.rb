@@ -59,8 +59,8 @@
   end
 
   def admin_user
-    # raise Forbidden unless current_user.admin?
-    redirect_to user_path(current_user.id), danger:"権限がありません" unless current_user.admin?
+    raise Forbidden unless current_user.admin?
+    # redirect_to user_path(current_user.id), danger:"権限がありません" unless current_user.admin?
   end
 
 end
