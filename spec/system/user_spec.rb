@@ -85,23 +85,38 @@ describe '管理者ユーザー'do
   end
 
   context 'ユーザー削除画面/destroy' do
-    it '管理者権限削除のコールバックが機能すること' do
+    it '一般ユーザーが削除されること' do
+      visit "/admin/users/15/"
+      first(:link, 'Destroy').click
+      page.accept_confirm "Confirm"
+      expect(page).not_to have_content 'TEST_NAME15'
     end
-    it '紐づいているタスクが同時に削除されること' do
+    it '管理者削除のコールバックが機能すること' do
+      visit "/admin/users/16/"
+      first(:link, 'Destroy').click
+      page.accept_confirm "Confirm"
+      expect(page).to have_content 'translation missing: ja.admin.users.destroy.notice'
     end
   end
 end
 describe '一般ユーザー' do
+  before do
+    visit new_session_path
+    fill_in 'session[email]', with: '1@test.com'
+    fill_in 'session[password]', with: '111111'
+    click_on 'commit'
+  end
     it '一般ユーザーがログインしたら、当該ユーザ一の詳細ページに遷移すること' do
-      visit new_session_path
-      fill_in 'session[email]', with: '1@test.com'
-      fill_in 'session[password]', with: '111111'
-      click_on 'commit'
       expect(page).to have_content 'TEST_NAME1のページ'
     end
-    it '一般ユーザーがadminにアクセスしたら、専用のエラーページに遷移すること' do
+    it '一般ユーザーが管理者ページにアクセスしたら、専用のエラーページに遷移すること' do
+      visit admin_users_path
+      expect(page).to have_content '403 Forbidden'
     end
-    it '一般ユーザーが他のユーザーの詳細ページにアクセスすると、自身のページにredirectされること' do
+    fit '一般ユーザーが他のユーザーの詳細ページにアクセスすると、自身のページにredirectされること' do
+      visit "/users/10/"
+      expect(page).to have_content '権限がありません'
+      expect(page).to have_content 'TEST_NAME1のページ'
     end
 end
 end

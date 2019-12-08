@@ -2,7 +2,7 @@
   factory :task, class: Task do
     sequence(:title) { |n| "TEST_TITLE#{n}"}
     sequence(:content) { |n| "TEST_CONTENT#{n}"}
-    sequence(:deadline, Date.today)
+    sequence(:deadline, Date.today + 1)
     sequence(:status, [0, 1, 2].cycle)
     sequence(:priority, [0, 1, 2].cycle)
 
@@ -23,7 +23,7 @@ FactoryBot.define do
 factory :admin_task, class: Task do
   sequence(:title) { |n| "TEST_TITLE#{n}"}
   sequence(:content) { |n| "TEST_CONTENT#{n}"}
-  sequence(:deadline, Date.today)
+  sequence(:deadline, Date.today + 1)
   sequence(:status, [0, 1, 2].cycle)
   sequence(:priority, [0, 1, 2].cycle)
   user_id { 16 }
