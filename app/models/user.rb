@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
-  before_save :admin_user_exist?
+  before_update :admin_user_exist?
 
   validates :name,  presence: true, length: { maximum: 30 }
   validates :email, uniqueness: true, presence: true, length: { maximum: 255 },
