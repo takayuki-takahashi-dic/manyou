@@ -146,6 +146,18 @@ ja:
       create: 登録する
       submit: 保存する
       update: 更新する
+    label:
+      user:
+        name: 名前
+        email: email
+        password: "パスワード"
+        password_confirmation: 確認
+        admin: 管理者権限
+      session:
+        name: 名前
+        email: email
+        password: "パスワード"
+        password_confirmation: 確認
   number:
     currency:
       format:
@@ -220,3 +232,28 @@ ja:
       notice: "ログインしてください"
     ensure_current_user:
       notice: "権限がありません"
+    new:
+      notice: "ログインしてください"
+  users:
+    current_user_only:
+      notice: "権限がありません"
+    show:
+      notice: "権限がありません"
+      confirm: "本当に退会しますか？"
+    edit:
+      notice: "権限がありません"
+      errors_count: 件のエラーが発生しました。
+    new:
+      notice: "既にログインしています"
+    create:
+      notice: "アカウントを作成しました"
+    update:
+      notice: "ユーザー情報を更新しました"
+    destroy:
+      notice: "退会しました"
+  admin:
+    users:
+      update:
+        notice: "ユーザー情報を更新しました"
+      destroy:
+        notice: "ユーザー情報を削除しました"

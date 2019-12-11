@@ -1,6 +1,15 @@
-<p id="notice"><%= notice %></p>
-<h1><%= @user.name %>のページ</h1>
-<p>メールアドレス: <%= @user.email %></p>
+<div class="table table-responsive" style="width: 36rem;">
+<table class="table table-bordered table-hover thead-light">
+    <tr>
+      <th style="width: 12rem;"><%= t '.user' %></th>
+      <td class="table-light"><%= @user.name %></td>
+    </tr>
+    <tr>
+      <th><%= t '.email' %></th>
+      <td class="table-light"><%= @user.email %></td>
+    </tr>
+</table>
+</div><!--/table-responsive-->
 
-<%= link_to '編集', edit_user_path(@user) %> |
-<%= link_to '退会', user_path(@user), method: :delete, data: { confirm: '本当に退会しますか？' } %>
+<%= link_to t('.edit'), edit_user_path(@user), class: "btn btn-primary"   %>
+<%= link_to t('.destroy'), user_path(@user), class: "btn btn-secondary"   , method: :delete, data: { confirm: t('.confirm') } %>

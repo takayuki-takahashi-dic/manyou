@@ -1,0 +1,6 @@
+ja:
+  sessions:
+    new:
+      login: ログイン
+      errors_count: 件のエラーが発生しました。
+      submit: 更新

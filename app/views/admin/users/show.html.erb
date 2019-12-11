@@ -1,6 +1,16 @@
-<h1><%= @user.name %>のページ</h1>
+<div class="table table-responsive" style="width: 36rem;">
+<table class="table table-bordered table-hover thead-light">
+    <tr>
+      <th style="width: 12rem;"><%= t '.user' %></th>
+      <td class="table-light"><%= @user.name %></td>
+    </tr>
+    <tr>
+      <th><%= t '.email' %></th>
+      <td class="table-light"><%= @user.email %></td>
+    </tr>
+</table>
+</div><!--/table-responsive-->
 
-<p>メールアドレス: <%= @user.email %></p>
 <%= link_to t('.edit'), edit_admin_user_path(@user) , class: 'btn btn-primary' %>
 <%= link_to t('.destroy'), admin_user_path(@user), method: :delete, data: { confirm: t('.confirm') } , class: 'btn btn-secondary' %>
 <br>
@@ -29,15 +39,6 @@
         <th>
           <%= Task.human_attribute_name :deadline %>
         </th>
-        <th>
-          user
-        </th>
-        <th>
-          user_id
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
       </tr>
 <tbody>
   <% @tasks.each do |task| %>
@@ -49,11 +50,6 @@
       <td><%= task.human_attribute_enum(:status) %></td>
       <td><%= task.human_attribute_enum(:priority) %></td>
       <td><%= task.deadline %></td>
-      <td><%= task.user.name %></td>
-      <td><%= task.user_id %></td>
-      <td><%= link_to t('.show'), task %></td>
-      <td><%= link_to t('.edit'), edit_task_path(task) %></td>
-      <td><%= link_to t('.destroy'), task, method: :delete, data: { confirm: t('.confirm') } %></td>
     </tr>
   <% end %>
 </tbody>

@@ -1,0 +1,15 @@
+ja:
+  users:
+    edit:
+      Edit: 編集
+      errors_count: 件のエラーが発生しました。
+      submit: 更新
+    new:
+      signup: アカウント作成
+      New Task: 新規作成
+      errors_count: 件のエラーが発生しました。
+    show:
+      user: ユーザー名
+      email: メールアドレス
+      edit: 編集
+      destroy: 退会

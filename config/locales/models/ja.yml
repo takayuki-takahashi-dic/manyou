@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       task: タスク # # view側： Task.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
+      users: ユーザー
     attributes:
       task:
         id: ID
@@ -20,3 +21,9 @@ ja:
         low: 低
         middle: 中
         high: 高
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認
+        admin: 管理者権限

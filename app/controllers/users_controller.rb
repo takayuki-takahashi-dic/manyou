@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :current_user_only, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -10,15 +11,12 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    if @user.id != current_user.id
-      redirect_to user_path(current_user.id), danger:"権限がありません"
-    end
   end
 
   # GET /users/new
   def new
     if logged_in?
-      redirect_to user_path(current_user.id), danger:"既にログインしています。"
+      redirect_to user_path(current_user.id), danger: t('.notice')
     end
     @user = User.new
   end
@@ -33,7 +31,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
       if @user.save
         log_in(@user)
-        redirect_to @user, notice: 'User was successfully created.'
+        redirect_to @user, success: t('.notice')
       else
         render 'new'
       end
@@ -44,7 +42,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, success: t('.notice') }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -58,7 +56,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to new_user_path, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to new_user_path, danger: t('.notice') }
       format.json { head :no_content }
     end
   end
@@ -73,5 +71,11 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
+    end
+
+    def current_user_only
+      if @user.id != current_user.id
+        redirect_to user_path(current_user.id), danger: t('.notice')
+      end
     end
 end

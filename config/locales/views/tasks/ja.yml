@@ -2,10 +2,13 @@ ja:
   tasks:
     form:
       errors_count: 件のエラーが発生しました。
+      new: 新規作成
+      edit: 更新
     edit:
       title: '編集'
       show: '詳細'
       back: 戻る
+      signup: 更新
     index:
       index_title: 'タスク一覧'
       created_at: '作成日時'
@@ -27,6 +30,7 @@ ja:
     new:
       Back: 戻る
       New Task: 新規作成
+      signup: 新規作成
 
     # show:
     #   title: '%{user_name}さんのユーザ情報' # 引数の指定もできる。
