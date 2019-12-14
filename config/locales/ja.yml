@@ -7,6 +7,8 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+        admin_user_must_exist: 管理者が１人以上存在する必要があります
+        current_admin_user_destroy: aaa
   date:
     abbr_day_names:
     - 日
@@ -242,7 +244,7 @@ ja:
       confirm: "本当に退会しますか？"
     edit:
       notice: "権限がありません"
-      errors_count: 件のエラーが発生しました。
+      errors_count: 件のエラーが発生しました
     new:
       notice: "既にログインしています"
     create:
@@ -257,3 +259,8 @@ ja:
         notice: "ユーザー情報を更新しました"
       destroy:
         notice: "ユーザー情報を削除しました"
+        danger: ユーザーを削除できませんでした
+      show:
+        confirm: "本当に削除しますか？"
+      index:
+        confirm: "本当に削除しますか？"

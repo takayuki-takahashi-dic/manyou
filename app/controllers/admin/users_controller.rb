@@ -39,11 +39,15 @@
   end
 
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_users_url, danger: t('.notice') }
-      format.json { head :no_content }
+    if @user.destroy
+      respond_to do |format|
+        format.html { redirect_to admin_users_url, danger: t('.notice') }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to admin_users_url, danger: t('.danger')
     end
+
   end
 
 
@@ -60,7 +64,6 @@
 
   def admin_user
     raise Forbidden unless current_user.admin?
-    # redirect_to user_path(current_user.id), danger:"権限がありません" unless current_user.admin?
   end
 
 end

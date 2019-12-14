@@ -13,7 +13,7 @@ class User < ApplicationRecord
   private
   def admin_user_exist?
     # throw(:abort) unless User.pluck("admin").include?(true)
-    errors.add(:base, "admin_user must exist")
+    errors.add(:base, :admin_user_must_exist)
     throw(:abort) if User.pluck("admin").count(true) == 1 && User.find(self.id).admin == true && self.admin == false
   end
 

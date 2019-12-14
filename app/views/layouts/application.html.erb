@@ -43,9 +43,7 @@
               <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin Menu</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to "Admin Index", admin_users_path ,class: 'dropdown-item' %>
-                <%= link_to "Admin Profile", admin_user_path(current_user.id) ,class: 'dropdown-item' %>
                 <%= link_to "Admin New", new_admin_user_path ,class: 'dropdown-item' %>
-                <%= link_to "New", new_task_path ,class: 'dropdown-item' %>
               </div>
             </li>
           <% end %>

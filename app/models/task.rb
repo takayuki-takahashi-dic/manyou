@@ -17,7 +17,7 @@ class Task < ApplicationRecord
 
   scope :search, -> (search_params) do
     return if search_params.blank?
-    title_like(search_params[:title])
+      title_like(search_params[:title])
       .status_is(search_params[:status])
       .priority_is(search_params[:priority])
   end
