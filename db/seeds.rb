@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-1.upto(10) do |n|
+1.upto(30) do |n|
   name = Faker::Games::Pokemon.name
   email = Faker::Internet.email
   password = "111111"
@@ -15,7 +15,7 @@
                password_confirmation: password,
               )
 end
-1.upto(10) do |n|
+1.upto(30) do |n|
   title = Faker::Games::Pokemon.location
   content = Faker::Games::Pokemon.move
   deadline = Faker::Date.forward(days: 10)
@@ -30,3 +30,29 @@ end
                user_id: user_id,
               )
 end
+
+User.create!(
+  [
+    {
+      name: "admin1",
+      email: "admin@1.com",
+      password: "111111",
+      password_confirmation: "111111",
+      admin: true
+    },
+    {
+      name: "admin2",
+      email: "admin@2.com",
+      password: "111111",
+      password_confirmation: "111111",
+      admin: true
+    },
+    {
+      name: "admin3",
+      email: "admin@3.com",
+      password: "111111",
+      password_confirmation: "111111",
+      admin: true
+      }
+    ]
+  )
