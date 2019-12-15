@@ -41,7 +41,7 @@
   def destroy
     if @user.destroy
       respond_to do |format|
-        format.html { redirect_to admin_users_url, danger: t('.notice') }
+        format.html { redirect_to admin_users_url, success: t('.notice') }
         format.json { head :no_content }
       end
     else

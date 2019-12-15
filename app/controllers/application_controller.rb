@@ -3,6 +3,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
 
+  before_action :set_request_filter
+
+  def set_request_filter
+    Thread.current[:request] = request
+  end
+
   class Forbidden < ActionController::ActionControllerError; end
   rescue_from Forbidden, with: :rescue403
 

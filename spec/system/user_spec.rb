@@ -1,6 +1,5 @@
 require 'rails_helper'
 # $ bin/rspec ./spec/system/user_spec.rb
-# 今回の実装のSystem Specを書きましょう（今回は一覧・作成・詳細・更新・削除のテストを全て書いてみましょう）
 
 RSpec.describe User, type: :system do
   before(:all) do
@@ -95,7 +94,7 @@ describe '管理者ユーザー'do
       visit "/admin/users/16/"
       first(:link, '退会').click
       page.accept_confirm "本当に削除しますか？"
-      expect(page).to have_content '削除できませんでした'
+      expect(page).to have_content '管理者ユーザーが１人以上存在する必要があります'
     end
   end
 end

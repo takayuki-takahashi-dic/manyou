@@ -259,7 +259,7 @@ ja:
         notice: "ユーザー情報を更新しました"
       destroy:
         notice: "ユーザー情報を削除しました"
-        danger: ユーザーを削除できませんでした
+        danger: 管理者ユーザーが１人以上存在する必要があります
       show:
         confirm: "本当に削除しますか？"
       index:

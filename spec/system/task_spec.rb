@@ -3,13 +3,26 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :system do
   before(:all) do
-    15.times {@task = create(:task)}
+    # 15.times {@task = create(:task)}
+    15.times { @user = create(:user) do |u|
+          u.tasks.create(attributes_for(:task))
+        end
+      }
+    @user = create(:admin_user)
+    15.times {@task = create(:admin_task)}
   end
   after(:all) do
     DatabaseCleaner.clean_with(:truncation)
   end
 
   describe 'タスク一覧画面/index' do
+    before do # 管理者ユーザーとしてログイン
+      visit new_session_path
+      fill_in 'session[email]', with: 'admin@test.com'
+      fill_in 'session[password]', with: '111111'
+      click_on 'commit'
+    end
+
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
         visit tasks_path
@@ -17,7 +30,7 @@ RSpec.describe Task, type: :system do
       end
     end
     context 'タスクが作成日時の降順に並んでいるかのテスト' do
-      it '最初のshowlinkをクリックすると、最後に作成したタスクの内容が表示されたページに遷移すること' do
+      it '最初の詳細リンクをクリックすると、最後に作成したタスクの内容が表示されたページに遷移すること' do
         visit tasks_path
         first(:link, '詳細').click
         expect(page).to have_content 'TEST_TITLE15'
@@ -45,6 +58,13 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'タスク登録画面/new' do
+    before do # 管理者ユーザーとしてログイン
+      visit new_session_path
+      fill_in 'session[email]', with: 'admin@test.com'
+      fill_in 'session[password]', with: '111111'
+      click_on 'commit'
+    end
+
     context '必要項目を入力して、createボタンを押した場合' do
       before do
         visit new_task_path
@@ -76,6 +96,13 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'タスク詳細画面/show' do
+    before do # 管理者ユーザーとしてログイン
+      visit new_session_path
+      fill_in 'session[email]', with: 'admin@test.com'
+      fill_in 'session[password]', with: '111111'
+      click_on 'commit'
+    end
+
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示されたページに遷移すること' do
         visit tasks_path
@@ -86,6 +113,13 @@ RSpec.describe Task, type: :system do
   end
 
   describe '終了期限のテスト' do
+    before do # 管理者ユーザーとしてログイン
+      visit new_session_path
+      fill_in 'session[email]', with: 'admin@test.com'
+      fill_in 'session[password]', with: '111111'
+      click_on 'commit'
+    end
+
     context '終了期限でソートした場合' do
       it '終了期限の▲をクリックすると、終了期限が早い順にソートされる。' do
         visit tasks_path
@@ -107,6 +141,13 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'ステータスのテスト'
+    before do # 管理者ユーザーとしてログイン
+      visit new_session_path
+      fill_in 'session[email]', with: 'admin@test.com'
+      fill_in 'session[password]', with: '111111'
+      click_on 'commit'
+    end
+
     context 'ステータスで検索した場合'
       it 'セレクトボックスで”完了”を選択し、検索ボタンをクリックすると、
       ”完了”のステータスを持つ情報のみがindexに表示される' do
