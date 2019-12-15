@@ -1,0 +1,8 @@
+ja:
+  errors:
+    forbidden:
+      Forbidden: 指定されたページを表示する権限がありません
+    not_found:
+      not_found: 指定されたページは存在しません
+    internal_server_error:
+      500: サーバーにエラーが発生しています

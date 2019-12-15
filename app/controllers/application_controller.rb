@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
 
   before_action :set_request_filter
-
   def set_request_filter
     Thread.current[:request] = request
   end
