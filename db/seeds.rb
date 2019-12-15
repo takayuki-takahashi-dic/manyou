@@ -56,3 +56,21 @@ User.create!(
       }
     ]
   )
+
+  Label.create!(
+    [
+      {title: "赤"},
+      {title: "青"},
+      {title: "黄"},
+      ]
+    )
+    Labeling.create!(
+      [
+        {label_id: 1,
+        task_id: 1},
+        {label_id: 2,
+        task_id: 2},
+        {label_id: 2,
+        task_id: 2},
+        ]
+      )
