@@ -35,21 +35,21 @@ User.create!(
   [
     {
       name: "admin1",
-      email: "admin@1.com",
+      email: "admin1@example.com",
       password: "111111",
       password_confirmation: "111111",
       admin: true
     },
     {
       name: "admin2",
-      email: "admin@2.com",
+      email: "admin2@example.com",
       password: "111111",
       password_confirmation: "111111",
       admin: true
     },
     {
       name: "admin3",
-      email: "admin@3.com",
+      email: "admin3@example.com",
       password: "111111",
       password_confirmation: "111111",
       admin: true
