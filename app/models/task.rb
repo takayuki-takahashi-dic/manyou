@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  belongs_to :user
+
   validates :title, presence: true, length: { maximum: 50 }
   validates :content, length: { maximum: 255 }
   validate :not_before_today # deadline < Date.today
@@ -11,9 +13,11 @@ class Task < ApplicationRecord
       errors.add(:deadline, :not_before_today) if deadline.nil? || deadline < Date.today
   end
 
+  scope :only_current_user, -> (user) { where(user_id: user) }
+
   scope :search, -> (search_params) do
     return if search_params.blank?
-    title_like(search_params[:title])
+      title_like(search_params[:title])
       .status_is(search_params[:status])
       .priority_is(search_params[:priority])
   end

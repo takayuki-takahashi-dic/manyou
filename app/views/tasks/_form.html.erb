@@ -40,8 +40,13 @@
 
 
 
+
   <div class="form-group">
-    <%= form.submit '新規作成', class: "btn btn-primary" %>
+    <% if @task.new_record? %>
+    <%= form.submit t(".new"), class: "btn btn-primary"   %>
+    <% else %>
+    <%= form.submit t(".edit"), class: "btn btn-primary"   %>
+    <% end %>
   </div>
 <% end %>
 

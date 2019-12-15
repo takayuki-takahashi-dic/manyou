@@ -3,23 +3,27 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   describe 'バリデーション' do
+    before do
+      @user = create(:admin_user)
+    end
+
     context 'title/content' do
       t = "t"
+      it "titleが50文字以内かつcontentが255文字以内で記載されていればバリデーションが通る" do
+        task = Task.new(title: t * 50 , content: t * 255, deadline: Date.today + 1, status: 1, priority: 1, user_id: @user.id)
+        expect(task).to be_valid
+      end
       it "titleが空ならバリデーションが通らない" do
-        task = Task.new(title: '', content: '')
+        task = Task.new(title: '', content: '', deadline: Date.today + 1, status: 1, priority: 1, user_id: @user.id)
         expect(task).not_to be_valid
       end
       it "titleが51文字以上ならバリデーションが通らない" do
-        task = Task.new(title: t * 51 , content: '')
+        task = Task.new(title: t * 51 , content: '', deadline: Date.today + 1, status: 1, priority: 1, user_id: @user.id)
         expect(task).not_to be_valid
       end
       it "contentが256文字以上ならバリデーションが通らない" do
-        task = Task.new(title: t * 51, content: t * 256)
+        task = Task.new(title: t * 50 , content: t * 256, deadline: Date.today + 1, status: 1, priority: 1, user_id: @user.id)
         expect(task).not_to be_valid
-      end
-      it "titleが50文字以内かつcontentが255文字以内で記載されていればバリデーションが通る" do
-        task = Task.new(title: t * 50, content: t * 255, deadline: Date.today)
-        expect(task).to be_valid
       end
     end
     context 'deadline' do
@@ -28,7 +32,8 @@ RSpec.describe Task, type: :model do
                         content: "t",
                         deadline: Date.today - 1,
                         status: 2,
-                        priority: 1)
+                        priority: 1,
+                        user_id: @user.id )
         expect(task).not_to be_valid
       end
     end
@@ -36,11 +41,16 @@ RSpec.describe Task, type: :model do
 
   describe '検索' do
     before(:all) do
-      15.times {@task = create(:task)}
+      # 15.times {@task = create(:task)}
+      15.times { @user = create(:user) do |u|
+            u.tasks.create(attributes_for(:task))
+          end
+        }
     end
     after(:all) do
       DatabaseCleaner.clean_with(:truncation)
     end
+
     context '文字列入力フォームの検索' do
       it 'titleに"1"が含まれる要素のみ取得する' do
         search_params = {title: "1", status: "", priority: "" }

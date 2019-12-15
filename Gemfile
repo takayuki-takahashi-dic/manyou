@@ -49,6 +49,8 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry-rails'
+  gem 'hirb'
+  gem 'hirb-unicode'
 end
 
 group :development do
@@ -75,3 +77,5 @@ end
   gem 'kaminari'
   gem 'bootstrap'
   gem 'jquery-rails'
+  gem 'bcrypt', '3.1.11'
+  gem 'faker'

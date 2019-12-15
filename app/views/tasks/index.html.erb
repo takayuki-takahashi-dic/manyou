@@ -3,20 +3,20 @@
 
   <%= form_with url: tasks_path, method: :get, local: true do |form| %>
   <div class="row">
-            <div class="col-md-3 mb-3">
-              <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"#{Task.human_attribute_name :title} or #{Task.human_attribute_name :content}" %>
-            </div>
-            <div class="col-md-3 mb-3">
-              <%= form.select :status, Task.enum_options_for_select(:status), {prompt: "#{Task.human_attribute_name :status}"}, { class: "form-control" } %>
-            </div>
-            <div class="col-md-3 mb-3">
-              <%= form.select :priority, Task.enum_options_for_select(:priority), {prompt: "#{Task.human_attribute_name :priority}"}, { class: "form-control" } %>
-            </div>
-            <div class="col-md-3 mb-3">
-              <%= form.submit '検索', class: 'btn btn-primary' %>
-              <%= link_to t('クリア'), tasks_path,class: 'btn btn-secondary' %>
-            </div>
-      </div>
+    <div class="col-md-3 mb-3">
+      <%= form.text_field :title, class: "form-control", value: @search_params[:title],placeholder:"#{Task.human_attribute_name :title} or #{Task.human_attribute_name :content}" %>
+    </div>
+    <div class="col-md-3 mb-3">
+      <%= form.select :status, Task.enum_options_for_select(:status), {prompt: "#{Task.human_attribute_name :status}"}, { class: "form-control" } %>
+    </div>
+    <div class="col-md-3 mb-3">
+      <%= form.select :priority, Task.enum_options_for_select(:priority), {prompt: "#{Task.human_attribute_name :priority}"}, { class: "form-control" } %>
+    </div>
+    <div class="col-md-3 mb-3">
+      <%= form.submit '検索', class: 'btn btn-primary' %>
+      <%= link_to t('クリア'), tasks_path,class: 'btn btn-secondary' %>
+    </div>
+  </div>
   <% end %>
 
 <div class="table-responsive">
