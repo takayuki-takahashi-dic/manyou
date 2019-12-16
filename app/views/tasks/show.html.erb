@@ -25,7 +25,7 @@
     <tr>
       <th><%= t '.tag' %></th>
       <td class="table-light">
-        <% @taggings.each do |tagging| %>
+        <% @task.taggings.each do |tagging| %>
           <span class="badge badge-pill badge-secondary"><%= tagging.tag.title %></span>
         <% end %>
       </td>
