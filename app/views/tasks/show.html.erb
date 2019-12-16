@@ -22,6 +22,15 @@
       <th><%= t '.priority' %></th>
       <td class="table-light"><%= @task.human_attribute_enum(:priority) %></td>
     </tr>
+    <tr>
+      <th><%= t '.tag' %></th>
+      <td class="table-light">
+        <% @taggings.each do |tagging| %>
+          <span class="badge badge-pill badge-secondary"><%= tagging.tag.title %></span>
+        <% end %>
+      </td>
+    </tr>
 </table>
+
 </div><!--/table-responsive-->
 <%= link_to t('.Edit'), edit_task_path(@task) %>

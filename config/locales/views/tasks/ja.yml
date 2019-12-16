@@ -43,6 +43,7 @@ ja:
       deadline: 終了期限
       status: ステータス
       priority: 優先順位
+      tag: タグ
 
       # title: '%{user_name}さんのユーザ情報を編集'
       # view側で t(.titile), user_name: @user.name みたいな感じで設定できる

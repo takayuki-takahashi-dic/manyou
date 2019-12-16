@@ -6,6 +6,5 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
   end
-  # root 'errors#routing_error'
   get '*anything' => 'errors#routing_error'
 end

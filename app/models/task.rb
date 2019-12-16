@@ -1,8 +1,8 @@
 class Task < ApplicationRecord
   belongs_to :user
-  has_many :labelings, dependent: :destroy
-  has_many :labels, through: :labelings
-  accepts_nested_attributes_for :labels, allow_destroy: true
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+  accepts_nested_attributes_for :taggings, allow_destroy: true
 
 
   validates :title, presence: true, length: { maximum: 50 }

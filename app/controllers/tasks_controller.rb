@@ -16,6 +16,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   def show
+    @taggings = @task.taggings
   end
 
   # GET /tasks/new
@@ -74,7 +75,7 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :content, :deadline, :status, :priority)
+      params.require(:task).permit(:title, :content, :deadline, :status, :priority, tag_ids: [])
     end
 
     def search_params
