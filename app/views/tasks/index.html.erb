@@ -57,7 +57,8 @@
         <%= sort_asc('deadline', @search_params) %>
         <%= sort_desc('deadline', @search_params) %>
       </th>
-      <th><%= t '.tag' %></th>
+      <th><%= Tag.model_name.human %></th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>

@@ -2,7 +2,8 @@ ja:
   activerecord:
     models:
       task: タスク # # view側： Task.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
-      users: ユーザー
+      user: ユーザー
+      tag: タグ
     attributes:
       task:
         id: ID
