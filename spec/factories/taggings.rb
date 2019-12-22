@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tagging do
-    task_id { 1 }
-    tag_id { 1 }
+    sequence(:task_id) { |n| n }
+    sequence(:tag_id, [1, 2, 3].cycle)
   end
 end

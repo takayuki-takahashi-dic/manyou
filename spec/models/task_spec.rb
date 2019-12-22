@@ -80,5 +80,34 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+  describe 'タグ検索' do
+    before(:all) do
+      15.times { @user = create(:user) do |u|
+            u.tasks.create(attributes_for(:task))
+          end
+        }
+
+        Tag.create!(
+          [
+            {title: "赤"},
+            {title: "青"},
+            {title: "黄"},
+            ]
+          )
+      @user = create(:admin_user)
+      15.times {@task = create(:admin_task) do |t|
+                t.taggings.create(attributes_for(:tagging))
+            end
+            }
+    end
+    after(:all) do
+      DatabaseCleaner.clean_with(:truncation)
+    end
+    it 'タグ"赤"の要素のみ取得する' do
+      search_params = {title: "", status: "", priority: "", tag_ids: 1 }
+      expect(Task.search(search_params)).to include(Task.find(16))
+      expect(Task.search(search_params)).to_not include(Task.find(17))
+    end
+  end
 
 end

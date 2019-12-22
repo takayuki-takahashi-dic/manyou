@@ -108,13 +108,26 @@ describe '一般ユーザー' do
     it '一般ユーザーがログインしたら、当該ユーザ一の詳細ページに遷移すること' do
       expect(page).to have_content 'TEST_NAME1'
     end
-    it '一般ユーザーが管理者ページにアクセスしたら、専用のエラーページに遷移すること' do
-      visit admin_users_path
-      expect(page).to have_content '403 Forbidden'
-    end
     it '一般ユーザーが他のユーザーの詳細ページにアクセスすると、自身のページにredirectされること' do
       visit "/users/10/"
       expect(page).to have_content 'TEST_NAME1'
     end
+
+  context 'エラーページ' do
+    it '一般ユーザーが管理者ページにアクセスしたら、403エラーページに遷移すること' do
+      visit admin_users_path
+      expect(page).to have_content '403 Error'
+    end
+    it '存在しないアドレスにアクセスしたら、404エラーページに遷移すること' do
+      visit "/users/100/"
+      expect(page).to have_content '404 Error'
+    end
+    it '例外が発生したら、500エラーページに遷移すること' do
+      allow_any_instance_of(UsersController).to receive(:edit).and_throw(Exception)
+          visit "/users/1/edit"
+          expect(page).to have_content '500 Error'
+    end
+  end
 end
+
 end
