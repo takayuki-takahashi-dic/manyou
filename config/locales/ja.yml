@@ -160,6 +160,8 @@ ja:
         email: email
         password: "パスワード"
         password_confirmation: 確認
+      task:
+        tags: タグ
   number:
     currency:
       format:

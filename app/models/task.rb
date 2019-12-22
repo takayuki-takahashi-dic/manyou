@@ -1,5 +1,9 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+  accepts_nested_attributes_for :taggings, allow_destroy: true
+
 
   validates :title, presence: true, length: { maximum: 50 }
   validates :content, length: { maximum: 255 }
@@ -20,9 +24,11 @@ class Task < ApplicationRecord
       title_like(search_params[:title])
       .status_is(search_params[:status])
       .priority_is(search_params[:priority])
+      .tagids_is(search_params[:tag_ids])
   end
   scope :title_like, -> (title) { where(['title LIKE ? OR content  LIKE ?',
                                 "%#{title}%", "%#{title}%"]) if title.present? }
   scope :status_is, -> (status) { where(status: status) if status.present? }
   scope :priority_is, -> (priority) { where(priority: priority) if priority.present? }
+  scope :tagids_is, -> (tag_ids) { Task.left_joins(:taggings).where( :taggings => { :tag_id => tag_ids })if tag_ids.present? }
 end

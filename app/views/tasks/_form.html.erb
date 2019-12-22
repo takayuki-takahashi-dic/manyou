@@ -38,8 +38,12 @@
     <%= form.select :priority, Task.enum_options_for_select(:priority), {}, {class: "form-control"} %>
   </div>
 
-
-
+  <div class="form-group">
+    <%= form.label :tags %><br>
+    <%= collection_check_boxes(:task, :tag_ids, Tag.all, :id, :title ) do |t|  %>
+      <% t.label { t.check_box + t.text } %>
+    <% end %>
+  </div>
 
   <div class="form-group">
     <% if @task.new_record? %>

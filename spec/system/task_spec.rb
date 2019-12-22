@@ -8,20 +8,31 @@ RSpec.describe Task, type: :system do
           u.tasks.create(attributes_for(:task))
         end
       }
+      Tag.create!(
+        [
+          {title: "赤"},
+          {title: "青"},
+          {title: "黄"},
+          ]
+        )
     @user = create(:admin_user)
-    15.times {@task = create(:admin_task)}
+    15.times {@task = create(:admin_task) do |t|
+              t.taggings.create(attributes_for(:tagging))
+          end
+          }
   end
   after(:all) do
     DatabaseCleaner.clean_with(:truncation)
   end
+  before do # 管理者ユーザーとしてログイン
+    visit new_session_path
+    fill_in 'session[email]', with: 'admin@test.com'
+    fill_in 'session[password]', with: '111111'
+    click_on 'commit'
+  end
+
 
   describe 'タスク一覧画面/index' do
-    before do # 管理者ユーザーとしてログイン
-      visit new_session_path
-      fill_in 'session[email]', with: 'admin@test.com'
-      fill_in 'session[password]', with: '111111'
-      click_on 'commit'
-    end
 
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示されること' do
@@ -58,13 +69,6 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'タスク登録画面/new' do
-    before do # 管理者ユーザーとしてログイン
-      visit new_session_path
-      fill_in 'session[email]', with: 'admin@test.com'
-      fill_in 'session[password]', with: '111111'
-      click_on 'commit'
-    end
-
     context '必要項目を入力して、createボタンを押した場合' do
       before do
         visit new_task_path
@@ -96,13 +100,6 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'タスク詳細画面/show' do
-    before do # 管理者ユーザーとしてログイン
-      visit new_session_path
-      fill_in 'session[email]', with: 'admin@test.com'
-      fill_in 'session[password]', with: '111111'
-      click_on 'commit'
-    end
-
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示されたページに遷移すること' do
         visit tasks_path
@@ -113,13 +110,6 @@ RSpec.describe Task, type: :system do
   end
 
   describe '終了期限のテスト' do
-    before do # 管理者ユーザーとしてログイン
-      visit new_session_path
-      fill_in 'session[email]', with: 'admin@test.com'
-      fill_in 'session[password]', with: '111111'
-      click_on 'commit'
-    end
-
     context '終了期限でソートした場合' do
       it '終了期限の▲をクリックすると、終了期限が早い順にソートされる。' do
         visit tasks_path
@@ -140,15 +130,8 @@ RSpec.describe Task, type: :system do
     end
   end
 
-  describe 'ステータスのテスト'
-    before do # 管理者ユーザーとしてログイン
-      visit new_session_path
-      fill_in 'session[email]', with: 'admin@test.com'
-      fill_in 'session[password]', with: '111111'
-      click_on 'commit'
-    end
-
-    context 'ステータスで検索した場合'
+  describe 'ステータスのテスト' do
+    context 'ステータスで検索した場合' do
       it 'セレクトボックスで”完了”を選択し、検索ボタンをクリックすると、
       ”完了”のステータスを持つ情報のみがindexに表示される' do
         visit tasks_path
@@ -158,4 +141,36 @@ RSpec.describe Task, type: :system do
         expect(find('.table-responsive')).to_not have_content '着手'
         # find('.table-responsive') テーブル要素の中身を検索
       end
+    end
+  end
+
+  describe 'タグのテスト' do
+    before do
+      visit new_task_path
+      fill_in 'タイトル', with: 'TEST_TITLE'
+      fill_in '詳細', with: 'TEST_CONTENT'
+      check '赤'
+      click_on '新規作成'
+    end
+    it "タグ赤を選択して新規作成すると、詳細画面にタグ赤が表示される" do
+      expect(page).to have_content '赤'
+      expect(page).not_to have_content '青'
+    end
+    it "タグ赤がついたタスクを、タグ青黄を選択して編集すると、詳細画面にタグ青黄が表示される" do
+      first(:link, '編集').click
+      uncheck '赤'
+      check '青'
+      check '黄'
+      click_on '更新'
+      expect(page).to have_content '青','黄'
+      expect(page).not_to have_content '赤'
+    end
+    it "タグ赤で検索すると、タグ赤のついたタスクのみ表示される" do
+      visit tasks_path
+      select '赤', from: 'tag_ids'
+      click_button '検索'
+      expect(find('.table-responsive')).to have_content '赤'
+      expect(find('.table-responsive')).to_not have_content '青'
+    end
+  end
 end

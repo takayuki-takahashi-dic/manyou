@@ -12,7 +12,12 @@
     <div class="col-md-3 mb-3">
       <%= form.select :priority, Task.enum_options_for_select(:priority), {prompt: "#{Task.human_attribute_name :priority}"}, { class: "form-control" } %>
     </div>
-    <div class="col-md-3 mb-3">
+
+    <div class="col-md-1 mb-1">
+      <%= form.select :tag_ids, Tag.all.map { |tag| [tag.title, tag.id] }, {include_blank: 'タグ' }, { class: "form-control"} %>
+    </div>
+
+    <div class="col-md-2 mb-2">
       <%= form.submit '検索', class: 'btn btn-primary' %>
       <%= link_to t('クリア'), tasks_path,class: 'btn btn-secondary' %>
     </div>
@@ -52,6 +57,7 @@
         <%= sort_asc('deadline', @search_params) %>
         <%= sort_desc('deadline', @search_params) %>
       </th>
+      <th><%= Tag.model_name.human %></th>
       <th></th>
       <th></th>
       <th></th>
@@ -67,6 +73,11 @@
         <td><%= task.human_attribute_enum(:status) %></td>
         <td><%= task.human_attribute_enum(:priority) %></td>
         <td><%= task.deadline %></td>
+        <td>
+          <% task.taggings.each do |tagging| %>
+          <span class="badge badge-pill badge-secondary"><%= tagging.tag.title %></span>
+          <% end %>
+        </td>
         <td><%= link_to t('.show'), task %></td>
         <td><%= link_to t('.edit'), edit_task_path(task) %></td>
         <td><%= link_to t('.destroy'), task, method: :delete, data: { confirm: t('.confirm') } %></td>

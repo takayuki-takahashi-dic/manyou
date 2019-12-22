@@ -56,3 +56,21 @@ User.create!(
       }
     ]
   )
+
+  Tag.create!(
+    [
+      {title: "赤"},
+      {title: "青"},
+      {title: "黄"},
+      ]
+    )
+    Tagging.create!(
+      [
+        {tag_id: 1,
+        task_id: 1},
+        {tag_id: 2,
+        task_id: 2},
+        {tag_id: 2,
+        task_id: 2},
+        ]
+      )
