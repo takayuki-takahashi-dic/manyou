@@ -13,13 +13,11 @@
       <%= form.select :priority, Task.enum_options_for_select(:priority), {prompt: "#{Task.human_attribute_name :priority}"}, { class: "form-control" } %>
     </div>
 
-    <div class="col-md-3 mb-3">
-      <%= collection_check_boxes(:task, :tag_ids, Tag.all, :id, :title ) do |t|  %>
-        <% t.label { t.check_box + t.text } %>
-      <% end %>
+    <div class="col-md-1 mb-1">
+      <%= form.select :tag_ids, Tag.all.map { |tag| [tag.title, tag.id] }, {include_blank: 'タグ' }, { class: "form-control"} %>
     </div>
 
-    <div class="col-md-3 mb-3">
+    <div class="col-md-2 mb-2">
       <%= form.submit '検索', class: 'btn btn-primary' %>
       <%= link_to t('クリア'), tasks_path,class: 'btn btn-secondary' %>
     </div>

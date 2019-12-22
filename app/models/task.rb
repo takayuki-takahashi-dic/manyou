@@ -24,11 +24,11 @@ class Task < ApplicationRecord
       title_like(search_params[:title])
       .status_is(search_params[:status])
       .priority_is(search_params[:priority])
-      .tag_ids_is(search_params[:task].to_h.values)
+      .tagids_is(search_params[:tag_ids])
   end
   scope :title_like, -> (title) { where(['title LIKE ? OR content  LIKE ?',
                                 "%#{title}%", "%#{title}%"]) if title.present? }
   scope :status_is, -> (status) { where(status: status) if status.present? }
   scope :priority_is, -> (priority) { where(priority: priority) if priority.present? }
-  scope :tag_ids_is, -> (tag_ids) { Task.left_joins(:taggings).where( :taggings => { :tag_id => tag_ids })if tag_ids.present? }
+  scope :tagids_is, -> (tag_ids) { Task.left_joins(:taggings).where( :taggings => { :tag_id => tag_ids })if tag_ids.present? }
 end
