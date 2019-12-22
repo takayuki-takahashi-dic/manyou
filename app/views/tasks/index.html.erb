@@ -14,9 +14,7 @@
     </div>
 
     <div class="col-md-3 mb-3">
-      <%= collection_check_boxes(:task, :tag_ids, Tag.all, :id, :title ) do |t|  %>
-        <% t.label { t.check_box + t.text } %>
-      <% end %>
+      <%= form.select :tag_ids, Tag.all.map { |tag| [tag.title, tag.id] }, {include_blank: true}, {class: '"form-control"', id: 'tag_search'} %>
     </div>
 
     <div class="col-md-3 mb-3">

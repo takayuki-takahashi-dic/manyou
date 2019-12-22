@@ -7,11 +7,20 @@ class TasksController < ApplicationController
   # GET /tasks
   def index
     sort_column = params[:column].presence || 'created_at'
+    if params[:tag_ids]
+      @tasks = Task.order(sort_column + ' ' + sort_direction)
+                   .page(params[:page]).per(10)
+                   .where(id: Tagging.where(tag_id: params[:tag_ids]).pluck(:task_id))
+                   .only_current_user(current_user.id)
+    else
       @tasks = Task.order(sort_column + ' ' + sort_direction)
                    .page(params[:page]).per(10)
                    .search(search_params)
                    .only_current_user(current_user.id)
+    end
     @search_params = search_params
+    raise
+
   end
 
   # GET /tasks/1
@@ -78,7 +87,8 @@ class TasksController < ApplicationController
     end
 
     def search_params
-      params.permit(:title, :content, :deadline, :status, :priority, task: [tag_ids: []])
+      # params.permit(:title, :content, :deadline, :status, :priority, task: [tag_ids: []])
+      params.permit(:title, :content, :deadline, :status, :priority).merge(tag_ids: [])
     end
 
     def eunsure_logged_in?
